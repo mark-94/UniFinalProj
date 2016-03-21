@@ -38,8 +38,7 @@ class Register extends Auth_Controller
  
             $additional_data = array(
                 'first_name' => $first_name,
-                'last_name' => $last_name
-            );
+                'last_name' => $last_name );
  
             $this->load->library('ion_auth');
             if($this->ion_auth->register($username,$password,$email,$additional_data))

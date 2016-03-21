@@ -4,9 +4,7 @@
 
     <div class="container">
         
-            <h2>Here is where I will put the text</h2>
-            <h3>testing</h3>
-            <h4>more testing</h4>
+            <?php echo $the_view_content;?>
         
     </div>
 

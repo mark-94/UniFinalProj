@@ -18,6 +18,7 @@
         <header>
             <nav class="navbar navbar-inverse navbar-static-top">
                 <div class="container">
+                <?php if($this->ion_auth->logged_in()){ ?>                
                     <!-- Drop down button for smaller screen sizes usually phones -->
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -26,7 +27,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Project name</a>
+                        <a class="navbar-brand" href="">Project name</a>
                     </div>
                     
                     <div id="navbar" class="collapse navbar-collapse">
@@ -36,7 +37,7 @@
                             <li><a href="#about">About</a></li>
                             <li><a href="#contact">Contact</a></li>
                         </ul>
-                        <!-- Right=aligned menu buttons -->
+                        <!-- Right-aligned menu buttons -->
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">Link</a></li>
                             <li class="dropdown">
@@ -50,7 +51,13 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    </div>                  
+                
+                <?php }
+                else
+                { 
+                    echo anchor('user/login', 'Treatment App', array('title' => 'treatmeant app','class' =>'navbar-brand')); 
+                } ?>
                 </div>
             </nav><!--/.nav-collapse -->
         </header>

@@ -23,7 +23,7 @@ class User extends MY_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() === FALSE)
         {
-			$this->load->helper('form');
+            $this->load->helper('form');
             $this->render('account/login_view');
         }
         else
@@ -31,7 +31,14 @@ class User extends MY_Controller {
             $remember = (bool) $this->input->post('remember');
             if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
             {
-                redirect('dashboard');
+                if ($this->ion_auth->is_admin())
+                {
+                    redirect('admin/dashboard');
+                }
+                else 
+                {
+                    redirect('home');
+                }
             }
             else
             {
@@ -45,6 +52,6 @@ class User extends MY_Controller {
     public function logout()
     {
         $this->ion_auth->logout();
-	redirect('user/login');
+	redirect('user/login', 'refresh');
     }
 }
