@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-  $this->load->view('common/_parts/header_view');
+  $this->load->view('common/_parts/auth_header_view');
 ?>
 
     <div class="container">
@@ -9,5 +9,5 @@
     </div>
 
 <?php
-$this->load->view('common/_parts/footer_view');
+$this->load->view('common/_parts/auth_footer_view');
 ?>

@@ -1,5 +1,5 @@
 RewriteEngine On
-SetEnvIf Host www.yoursite.tld$ CI_ENV=production
+SetEnvIf Host scm.ulster.ac.uk$ CI_ENV=production
 SetEnvIf Host test.yoursite.tld$ CI_ENV=testing
 SetEnvIf Host localhost$ CI_ENV=development
 

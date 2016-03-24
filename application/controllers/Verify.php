@@ -28,14 +28,10 @@ class Verify extends CI_Controller
     // retrieves the config data
     $data['config'] = $this->config->config;
     
-     // is a connection to the database established already (ie: if is "autoloaded")
     $data['loaded_database'] = 'Database is not loaded';
-    // if we find that the connection is established...
     if (isset($this->db) && $this->db->conn_id !== FALSE) 
     {
-        // ...we will modify the message
         $data['loaded_database'] = 'Database is loaded and connected';
-        // ...and retrieve the database settings
         $data['db_settings'] = array(
         'dsn' => $this->db->dsn,
         'hostname' => $this->db->hostname,
@@ -43,7 +39,6 @@ class Verify extends CI_Controller
         'username' => '***',
         'password' => '***',
         'database' => '***',
-        // if you are sure that only the right eyes will see the controller, you can uncomment the three lines below
         'username' => $this->db->username,
         'password' => $this->db->password,
         'database' => $this->db->database,
@@ -56,7 +51,7 @@ class Verify extends CI_Controller
         'char_set' => $this->db->char_set,
         'dbcollat' => $this->db->dbcollat,
         'swap_pre' => $this->db->swap_pre,
-        //'autoinit' => $this->db->autoinit,
+       // 'autoinit' => $this->db->autoinit,
         'encrypt' => $this->db->encrypt,
         'compress' => $this->db->compress,
         'stricton' => $this->db->stricton,
@@ -80,19 +75,18 @@ class Verify extends CI_Controller
        $data['writable_logs'] = TRUE;
     }
     
-//    // optionally you can look for other writable directories. In this case I have an uploads directory in public folder
+//    // optionally you can look for other writable directories. 
 //    $this->load->helper('url');
-//    $uploads_path = base_url().'uploads';
-//    if(is_really_writable($uploads_path))
+//    $OPTIONAL_NAME = base_url().'OPTIONAL_NAME';
+//    if(is_really_writable($OPTIONAL_NAME))
 //    {
-//      $data['writable_uploads'] = $uploads_path.' is writable';
+//      $data['writable_OPTIONAL_NAME'] = $OPTIONAL_NAME.' is writable';
 //    }
 //    else
 //    {
-//      $data['writable_uploads'] = '<span class="red"><strong>'.$uploads_path.'</strong> is not writable</span>';
+//      $data['writable_OPTIONAL_NAME'] = '<span class="red"><strong>'.$OPTIONAL_NAME.'</strong> is not writable</span>';
 //    }
     
-     // the verify view, passing the data to it
     $this->load->view('verify_view', $data);
   }
 }

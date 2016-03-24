@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Verify my Codeigniter Framework</title>
+    <title>Verify Codeigniter Framework</title>
     <style>
         /* a small css reset */
         html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;}
@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-<h1>My Codeigniter Framework:</h1>
+<h1>Codeigniter Framework:</h1>
 <table>
     <thead>
     <tr>
@@ -287,10 +287,6 @@
             <td><?php echo ($config['sess_expiration']==0) ? 'Expire on close' : $config['sess_expiration']; ?></td>
         </tr>
         <tr>
-            <th>Session encrypt cookie:</th>
-            <td><?php echo(($config['sess_encrypt_cookie']) ? 'TRUE' : '<span class="red">FALSE</span>'); ?></td>
-        </tr>
-        <tr>
             <th>Match IP for sessions:</th>
             <td><?php echo(($config['sess_match_ip']) ? 'TRUE' : '<span class="red">FALSE</span>'); ?></td>
         </tr>
@@ -392,10 +388,10 @@
                 <th>Swap pre:</th>
                 <td><?php echo $db_settings['swap_pre']; ?></td>
             </tr>
-            <tr>
+            <!--<tr>
                 <th>Autoinit:</th>
                 <td><?php echo $db_settings['autoinit']; ?></td>
-            </tr>
+            </tr>-->
             <tr>
                 <th>Encrypt:</th>
                 <td><?php echo $db_settings['encrypt']; ?></td>

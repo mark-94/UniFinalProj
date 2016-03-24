@@ -22,8 +22,8 @@
                     </div>
                     <?php } else{ ?>
                     <div class="col-lg-4">
-                        <h4>Phone:<a href="tel:(028) 1234 1234">(028) 1234 1234</a></h4>
-                        <h4>Email:<a href="mailto:info@onlinestore.co.uk">info@onlinestore.co.uk</a></h4>
+                        <h5>Phone: <a href="tel:(028) 1234 1234">(028) 1234 1234</a></h5>
+                        <h5>Email: <a href="mailto:example@email.co.uk">example@email.co.uk</a></h5>
                     </div> 
                     <?php } ?>
 
@@ -31,7 +31,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>Copyright &copy; Company 2013</p>
+                        <p>Copyright &copy; Company 2016</p>
                     </div>
                     <div class="col-lg-12">
                         <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds.

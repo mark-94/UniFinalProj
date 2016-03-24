@@ -37,7 +37,7 @@ class User extends MY_Controller {
                 }
                 else 
                 {
-                    redirect('home');
+                    redirect('welcome');
                 }
             }
             else

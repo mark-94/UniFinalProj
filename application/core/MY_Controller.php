@@ -47,3 +47,25 @@ class Auth_Controller extends MY_Controller
         parent::render($the_view, $template);
     }
 }
+
+class Admin_Controller extends MY_Controller
+{
+    function __construct() 
+    {
+        parent::__construct();
+        $this->load->library('ion_auth');
+        if($this->ion_auth->logged_in()===FALSE)
+        {
+            redirect('user/login');
+        }
+        elseif ($this->ion_auth->is_admin()===FALSE) 
+        {
+            redirect('welcome');
+        }
+    }
+    protected function render($the_view = NULL, $template = 'auth_main_content')
+    {
+        parent::render($the_view, $template);
+    }
+    
+}
