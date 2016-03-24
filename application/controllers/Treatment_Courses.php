@@ -18,6 +18,6 @@ class Treatment_Course extends Auth_Controller {
     {
         $data['treatment_courses'] = $this->treatment_courses->getTreatmentCourses();
         $data['title'] = "Treatment Courses";
-        $this->render('treatment_courses');
+        $this->render('treatment_courses', $data);
     }
 }
