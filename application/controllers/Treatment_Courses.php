@@ -1,23 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Treatment_Course extends Auth_Controller {
+class Treatment_Courses extends Auth_Controller {
 
     function __construct()
     {
-      parent::__construct();
-      $this->load->model('Model_Treatment_Courses');
+      parent::__construct();        
+        $this->load->model('Model_Treatment_Courses');
     }
     
     public function index()
     {
-        $this->getAllCourses();
+        $this->getAllCourses();        
     }
     
     function getAllCourses()
     {
-        $data['treatment_courses'] = $this->treatment_courses->getTreatmentCourses();
-        $data['title'] = "Treatment Courses";
-        $this->render('treatment_courses', $data);
+        $this->data['title'] = "Treatment Courses";
+        $this->data['treatment_courses'] = $this->Model_Treatment_Courses->getTreatmentCourses()->result();
+        
+        $this->_render_page('treatment_courses_view',$this->data);
     }
 }

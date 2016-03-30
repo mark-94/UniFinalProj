@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-  $this->load->view('common/_parts/auth_header_view');
+  echo $the_head_content;
 ?>
 
     <div class="container">

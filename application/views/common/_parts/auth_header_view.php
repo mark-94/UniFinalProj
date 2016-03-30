@@ -6,10 +6,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title><?php echo $pagetitle;?></title>
+        <title><?php echo $title;?></title>
+        
         <link href="<?php echo assets_url('css/bootstrap.min.css');?>" rel="stylesheet">
+        
         <script src="<?php echo assets_url('js/jquery-1.12.1.min.js')?>"></script>
         <script src="<?php echo assets_url('js/bootstrap.min.js')?>"></script>
+        <script src="<?php echo assets_url("js/$load_custom_js")?>"></script>
     </head>
     <body>
         <header>

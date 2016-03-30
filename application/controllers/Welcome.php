@@ -10,6 +10,6 @@ class Welcome extends Auth_Controller {
     
     public function index()
     {
-        $this->render('home_view');
+        $this->_render_page('home_view');
     }
 }

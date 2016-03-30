@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  
-class Verify extends CI_Controller
+class Verify extends Admin_Controller
 {
   public function __construct()
   {
@@ -16,23 +16,23 @@ class Verify extends CI_Controller
   public function index()
   {
     // we should retrieve the environment we are into
-    $data['environment'] = ENVIRONMENT;
+    $this->data['environment'] = ENVIRONMENT;
     
     //get_loaded_classes() is a method from MY_Loader. It retrieves the list of classes that are loaded (which in Loader.php is actually protected)
-    $data['loaded_classes'] = $this->load->get_loaded_classes();
+    $this->data['loaded_classes'] = $this->load->get_loaded_classes();
     // same as before, a method from MY_Loader that retrieves helpers
-    $data['loaded_helpers'] = $this->load->get_loaded_helpers();
+    $this->data['loaded_helpers'] = $this->load->get_loaded_helpers();
     // same as before, a method from MY_Loader that retrieves the models loaded
-    $data['loaded_models'] = $this->load->get_loaded_models();
+    $this->data['loaded_models'] = $this->load->get_loaded_models();
     
     // retrieves the config data
-    $data['config'] = $this->config->config;
+    $this->data['config'] = $this->config->config;
     
-    $data['loaded_database'] = 'Database is not loaded';
+    $this->data['loaded_database'] = 'Database is not loaded';
     if (isset($this->db) && $this->db->conn_id !== FALSE) 
     {
-        $data['loaded_database'] = 'Database is loaded and connected';
-        $data['db_settings'] = array(
+        $this->data['loaded_database'] = 'Database is loaded and connected';
+        $this->data['db_settings'] = array(
         'dsn' => $this->db->dsn,
         'hostname' => $this->db->hostname,
         'port' => $this->db->port,
@@ -65,14 +65,14 @@ class Verify extends CI_Controller
     // and verify that it is writable
     if(is_really_writable($cache_path))
     {
-      $data['writable_cache'] = TRUE;
+      $this->data['writable_cache'] = TRUE;
     }
     // also look for the logs path
     $log_path = ($this->config->item('log_path') === '') ? APPPATH.'logs/' : $this->config->item('log_path');
     // and verify if is writable
     if(is_really_writable($log_path))
     {
-       $data['writable_logs'] = TRUE;
+       $this->data['writable_logs'] = TRUE;
     }
     
 //    // optionally you can look for other writable directories. 
@@ -87,7 +87,8 @@ class Verify extends CI_Controller
 //      $data['writable_OPTIONAL_NAME'] = '<span class="red"><strong>'.$OPTIONAL_NAME.'</strong> is not writable</span>';
 //    }
     
-    $this->load->view('verify_view', $data);
+    //$this->load->view('verify_view', $data);
+    $this->_render_page('verify_view', $this->data, true, null);
   }
 }
     
