@@ -11,6 +11,7 @@ class Diagnosis extends Admin_Controller {
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
         $this->data['load_custom_js'] = "inlineEdit.js";
+        $this->data['load_custom_css'] = "scrollDiv.css";
     }
     
     public function index()
@@ -24,25 +25,16 @@ class Diagnosis extends Admin_Controller {
         $this->data['controller'] = 'diagnosis';
         $this->data['update'] = 'updateDiagnosis';
         $this->data['treatment'] = $this->Model_Treatment_Courses->getTreatmentCourses();
-        //$this->data['diagnosis_courses'] = $this->Model_Diagnosis->getDiagnosisCourses();        
         $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis(); 
         
         foreach ($this->data['diagnosis'] as $key => $diagnosis_course)
         {
-                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id);
-        }
-
-			
+                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN');
+                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN');
+        }			
         
         $this->_render_page('diagnosis_view',$this->data);
     }
-    
-//    function getDiagnosisCourses()
-//    {
-//        $diagnosisID = $this->input->post('diagnosisID');
-//        $this->Model_Diagnosis->getCourses($diagnosisID);
-//        return;
-//    }
     
     function update()
     {
@@ -52,6 +44,24 @@ class Diagnosis extends Admin_Controller {
 
                          
         $this->Model_Diagnosis->inlineEdit( $field, $editedValue, $id );
+        return;
+    }
+    
+    function addSelection()
+    {
+        $data['diagnosis_id'] = $this->input->post('diag_id');
+        $data['treatment_course_id'] = $this->input->post('treat_id');
+                                 
+        $this->Model_Diagnosis->insertSelection( $data );
+        return;
+    }
+    
+    function deleteSelection()
+    {
+        $data['diagnosis_id'] = $this->input->post('diag_id');
+        $data['treatment_course_id'] = $this->input->post('treat_id');
+                                 
+        $this->Model_Diagnosis->deleteSelection( $data );
         return;
     }
     

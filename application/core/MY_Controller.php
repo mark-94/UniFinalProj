@@ -9,27 +9,8 @@ class MY_Controller extends CI_Controller
             function __construct()
     {
         parent::__construct();
-        //$this->data['pagetitle'] = 'Treatment App';
+        
     }
-        
-   /* protected function render($the_view = NULL, $template = 'main_content') 
-    {
-        if($template == 'json' || $this->input->is_ajax_request())
-        {
-            header('Content-Type: application/json');
-            echo json_encode($this->data);
-        }
-        elseif(is_null($template))
-        {
-          $this->load->view($the_view,$this->data);
-        }
-        else
-        {
-          $this->data['the_view_content'] = (is_null($the_view)) ? '' : $this->load->view($the_view,$this->data, TRUE);
-          $this->load->view('common/'.$template.'_view', $this->data);
-        }
-        
-    }*/
     
     function _render_page($the_view, $data=array(), $returnhtml=false, $template='auth_main_content')
     {
@@ -66,8 +47,10 @@ class Auth_Controller extends MY_Controller
         $this->load->library('ion_auth');
         if($this->ion_auth->logged_in()===FALSE)
         {
-            redirect('user/login');
+            redirect('auth/login');
         }
+        $user = $this->ion_auth->users()->row();
+        $this->data['current_username'] = $user->username;
     }
     
     
@@ -82,12 +65,14 @@ class Admin_Controller extends MY_Controller
         $this->load->library('ion_auth');
         if($this->ion_auth->logged_in()===FALSE)
         {
-            redirect('user/login');
+            redirect('auth/login');
         }
         elseif ($this->ion_auth->is_admin()===FALSE) 
         {
             redirect('welcome');
         }
+        $user = $this->ion_auth->users()->row();
+        $this->data['current_username'] = $user->username;
     }
     
     function _render_page($the_view, $data=array(), $returnhtml=false, $template='auth_main_content')

@@ -1,0 +1,17 @@
+.scrollDiv {
+  height: 400px; 
+  overflow-y: scroll; 
+}
+
+.de-margin{
+    margin: 0px;
+}
+
+.de-pad{
+    padding: 0px;
+}
+
+.side-margin{
+    margin-left: 3px;
+    margin-right: 3px;
+}

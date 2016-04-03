@@ -13,31 +13,40 @@ class Model_Diagnosis extends CI_Model
         return $query->result();                
     }
     
-    function inlineEdit($field, $editedValue, $id )
-    {
-        $data[$field] = $editedValue;
-        //$result = mysql_query("UPDATE users set $field = $editedValue WHERE  id=$id");
-        $this->db->where('id',$id);
-        $this->db->update('diagnosis',$data);
-        
-    }
     
     function insertDiagnosis($data=array())
     {
         $this->db->insert('diagnosis',$data);
     }
     
-    //returns all treatment course names where treatment id and diagnosis id are associated
-    function getDiagnosisCourses($id)
+    function inlineEdit($field, $editedValue, $id )
     {
-        //$query = $this->db->get('diagnosis_treatment');
-//        foreach ($diagnosis as $value) 
-//        {
-            $query = $this->db->query("SELECT id,course_name FROM treatment_courses WHERE id IN (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
-                                // ."(SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id =1)", NULL, FALSE);
+        $data[$field] = $editedValue;
+       
+        $this->db->where('id',$id);
+        $this->db->update('diagnosis',$data);
         
-        //SELECT id,course_name FROM treatment_courses WHERE id IN (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id = 1)
-        return $query->result();
+    }
+    
+    function insertSelection($data=array())
+    {
+        $this->db->insert('diagnosis_treatment',$data);
+        
+    }
+    
+    function deleteSelection($data=array())
+    {
+        $this->db->where($data);
+        $this->db->delete('diagnosis_treatment');
+        return;
+    }
+    
+    //returns all treatment course names where treatment id and diagnosis id are associated
+    function getDiagnosisCourses($id,$in)
+    {
+            $query = $this->db->query("SELECT id,course_name FROM treatment_courses WHERE id $in (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
+            
+            return $query->result();
     }
     
 }

@@ -16,7 +16,6 @@ class Model_Medication extends CI_Model
     function inlineEdit($field, $editedValue, $id )
     {
         $data[$field] = $editedValue;
-        //$result = mysql_query("UPDATE users set $field = $editedValue WHERE  id=$id");
         $this->db->where('id',$id);
         $this->db->update('medication',$data);
         

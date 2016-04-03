@@ -10,6 +10,7 @@ class Medication extends Admin_Controller {
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
         $this->data['load_custom_js'] = "inlineEdit.js";
+        $this->data['load_custom_css'] = "scrollDiv.css";
     }
     
     public function index()

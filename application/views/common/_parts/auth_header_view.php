@@ -9,10 +9,12 @@
         <title><?php echo $title;?></title>
         
         <link href="<?php echo assets_url('css/bootstrap.min.css');?>" rel="stylesheet">
+        <?php if(isset($load_custom_css)){?><link href="<?php echo assets_url("css/$load_custom_css") ?>" rel="stylesheet"></link><?php } ?>
         
         <script src="<?php echo assets_url('js/jquery-1.12.1.min.js')?>"></script>
         <script src="<?php echo assets_url('js/bootstrap.min.js')?>"></script>
-        <script src="<?php echo assets_url("js/$load_custom_js")?>"></script>
+        <?php if(isset($load_custom_js)){?><script src="<?php echo assets_url("js/$load_custom_js") ?>"></script><?php } ?>
+        
     </head>
     <body>
         <header>
@@ -41,15 +43,15 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">Link</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><?php echo anchor('user/logout', 'Logout');?></li>
+                                <?php if(isset($current_username)){ ?><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'> <?php echo $current_username ?> <span class='caret'></span></a>
+                                <ul class='dropdown-menu'>
+                                    <li><a href='#'>Action</a></li>
+                                    <li><a href='#'>Another action</a></li>
+                                    <li><a href='#'>Something else here</a></li>
+                                    <li role='separator' class='divider'></li>
+                                    <li> <?php anchor('auth/logout', 'Logout') ?> </li>
                                 </ul>
-                            </li>
+                                </li><?php } ?>
                         </ul>
                     </div>                  
                 
