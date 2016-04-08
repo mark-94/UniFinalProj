@@ -18,7 +18,7 @@
                              
                     <!-- Drop down button for smaller screen sizes usually phones -->
                     <div class="navbar-header">                        
-                        <div class="navbar-brand">Treatment App</div>
+                        <?php echo anchor('welcome', 'Home', array('title' => 'home','class' =>'navbar-brand')); ?>
                     </div>                   
                 
                 

@@ -10,6 +10,7 @@ class Welcome extends Auth_Controller {
     
     public function index()
     {
+        $this->data['title'] = 'Welcome to the CAMHS eReferral website';
         $this->_render_page('home_view');
     }
 }

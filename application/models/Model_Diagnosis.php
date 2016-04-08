@@ -10,7 +10,13 @@ class Model_Diagnosis extends CI_Model
     function getDiagnosis()
     {
         $query = $this->db->get('diagnosis');
-        return $query->result();                
+        return $query;                
+    }
+    
+    function getSingleDiagnosis($id)
+    {
+        $query = $this->db->get_where('diagnosis',array('id'=>$id));
+        return $query;
     }
     
     
@@ -41,12 +47,12 @@ class Model_Diagnosis extends CI_Model
         return;
     }
     
-    //returns all treatment course names where treatment id and diagnosis id are associated
+    //returns all treatment courses where treatment id and diagnosis id are associated
     function getDiagnosisCourses($id,$in)
     {
-            $query = $this->db->query("SELECT id,course_name FROM treatment_courses WHERE id $in (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
+            $query = $this->db->query("SELECT * FROM treatment_courses WHERE id $in (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
             
-            return $query->result();
+            return $query;
     }
     
 }

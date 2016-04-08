@@ -1,0 +1,40 @@
+.scrollDiv {
+  min-height: 150px;
+  max-height: 400px; 
+  overflow-y: scroll; 
+}
+
+.de-margin{
+    margin: 0px;
+}
+
+.de-pad{
+    padding: 0px;
+}
+
+.side-margin{
+    margin-left: 3px;
+    margin-right: 3px;
+}
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+.dropdown-menu-width-match-parent {
+  width: 100%; 
+}
+
+.btn-width-match-parent{
+ width: 100%;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.error {
+    color: #ff0000;
+}

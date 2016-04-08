@@ -3,41 +3,42 @@
 <div class="row col-lg-12">
     <div class="row col-lg-12">
         <div class="col-lg-6 pull-right">
-            <div><strong>Referral created: </strong><?php echo $patient_referral->date_created ?></div>
-            <div><strong>Last Updated: </strong><?php echo $patient_referral->last_update ?></div>
-            <div><strong>Urgency: </strong><?php echo $urgency ?></div>
+            <p><strong>Referral created: </strong><?php echo $patient_referral->date_created ?></p>
+            <p><strong>Last Updated: </strong><?php echo $patient_referral->last_update ?></p>
+            <p><strong>Urgency: </strong><?php echo $urgency ?></p>
         </div>
     </div>
     <div class="row col-lg-12">
         <div class="row col-lg-6">
-            <div><strong>Patient NID: </strong><?php echo $patient_details->nid ?></div>
-            <div class="text-capitalize"><strong>Patient Name: </strong><?php echo "$patient_details->first_name $patient_details->last_name" ?></div>
-            <div><strong>Patient DOB: </strong><?php echo $patient_details->DOB ?></div>
-        </div>
-    </div></br>
-    <div class="row col-lg-12">
-        <div><strong>Diagnosis: </strong><?php echo $diagnosis->diagnosis_name ?></div>
-    </div></br>
-    <div class="row col-lg-12">
-        <div><strong>Notes:</strong></div>
-        <div><?php echo $patient_referral->comment?></div>
+            <p><strong>Patient NID: </strong><?php echo $patient_details->nid ?></p>
+            <p class="text-capitalize"><strong>Patient Name: </strong><?php echo "$patient_details->first_name $patient_details->last_name" ?></p>
+            <p><strong>Patient DOB: </strong><?php echo $patient_details->DOB ?></p>
+        </div><hr>
     </div>
+    <div class="row col-lg-12">
+        <p><strong>Diagnosis: </strong><?php echo $diagnosis->diagnosis_name ?></p>
+    </div>
+    <div class="row col-lg-12">
+        <p><strong>Notes:</strong></p>
+        <div><?php echo $patient_referral->comment?></div><hr>
+    </div> 
 </div>
-<div role="seperator" class="row col-lg-12 divider"></div>
-<div class="row col-lg-12">
-    <?php foreach($treatment_courses as $course){ ?>
-    <div class="row">
-        <div class="col-lg-6 pull-left">
-            <div><?php echo $course->course_name?></div>
-            <div><?php echo $course->length ?></div>
-        </div><div class="col-lg-6 pull-right">
-            <div><?php echo $course->NHS_best_practice ?></div>
+   
+<?php foreach($treatment_courses as $course){ ?>
+    <div class="row col-lg-12">
+        <div class="col-lg-4 pull-left">
+            <p><?php echo $course->course_name?></p>
+            <p><?php echo $course->length ?></p>
         </div>
-    </div></br>
-    <div> <?php echo $course->description ?></div></br>
-    <div class="divider"></div>
-    <?php } ?>
-    <?php echo '<pre>';print_r($treatment_courses);echo'</pre>' ?>
-</div>
+        <div class="col-lg-4 pull-right">
+            <p align="right"><?php echo $course->NHS_best_practice ?></p>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-lg-12"> <?php echo $course->description ?><hr></div>
+    </div>
+   
+<?php } ?>
+
     
     

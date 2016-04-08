@@ -6,7 +6,6 @@ class Medication extends Auth_Controller {
     {
       parent::__construct();        
         $this->load->model('Model_Medication');
-        $this->data['load_custom_css'] = "scrollDiv.css";
     }
     
     public function index()

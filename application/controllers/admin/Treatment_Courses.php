@@ -9,8 +9,8 @@ class Treatment_Courses extends Admin_Controller {
         $this->load->model('Model_Treatment_Courses');
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
-        $this->data['load_custom_js'] = 'inlineEdit.js';
-        $this->data['load_custom_css'] = 'scrollDiv.css';
+        
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
     }
     
     public function index()
@@ -33,7 +33,8 @@ class Treatment_Courses extends Admin_Controller {
         $id = $this->input->post('id');
          
         $this->Model_Treatment_Courses->inlineEdit( $field, $editedValue, $id );
-        return;
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
     }
     
         
@@ -48,7 +49,37 @@ class Treatment_Courses extends Admin_Controller {
 
         if ($this->form_validation->run() === FALSE)
         {
-            $this->_render_page('add_course_view');
+            $this->data['course_name'] = array(
+                'name'  => 'course_name',
+                'id'    => 'course_name',
+                'class' => 'form-control',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('course_name'),
+            );
+            $this->data['length'] = array(
+                'name'  => 'length',
+                'id'    => 'length',
+                'class' => 'form-control',
+                'type'  => 'number',
+                'min' => '0',
+                'value' => $this->form_validation->set_value('length'),
+            );
+            $this->data['best_practice'] = array(
+                'name'  => 'best_practice',
+                'id'    => 'best_practice',
+                'class' => 'form-control',
+                'type'  => 'checkbox',
+                'value' => $this->form_validation->set_value('best_practice'),
+            );
+            $this->data['description'] = array(
+                'name'  => 'description',
+                'id'    => 'description',
+                'class' => 'form-control',
+                'type'  => 'textarea',
+                'rows' => '10',
+                'value' => $this->form_validation->set_value('description'),
+            );
+            $this->_render_page('add_course_view', $this->data);
         }
         else 
         {

@@ -9,9 +9,8 @@ class Model_Patient extends CI_Model
     
     function getPatient($nid)
     {
-        $this->db->select('first_name','last_name');
         $query = $this->db->get_where('patient', array('nid'=>$nid));
-        return $query->result();                
+        return $query;                
     }
     
     function insertPatient($data=array())

@@ -12,7 +12,7 @@ class MY_Controller extends CI_Controller
         
     }
     
-    function _render_page($the_view, $data=array(), $returnhtml=false, $template='auth_main_content')
+    function _render_page($the_view, $data=array(), $template='main_content')
     {
         //if it's decided/need to use json files for any content
         if($template == 'json' || $this->input->is_ajax_request())
@@ -20,7 +20,7 @@ class MY_Controller extends CI_Controller
             header('Content-Type: application/json');
             echo json_encode($this->data);
         }
-        //if its need for page to have no template
+        //if its decided/need for page to have no template
         elseif(is_null($template))
         {
             $this->load->view($the_view,$this->data);
@@ -28,11 +28,16 @@ class MY_Controller extends CI_Controller
         else
         {
             $this->data['the_view_content'] = (is_null($the_view)) ? '' : $this->load->view($the_view,$this->data, TRUE);
-            $this->data['the_head_content'] = $this->load->view('common/_parts/auth_header_view',$this->data, TRUE);
-            $view_html = $this->load->view('common/'.$template.'_view', $this->data, $returnhtml);
+            if($template=='main_content')
+            {
+                $this->data['the_head_content'] = $this->load->view('common/_parts/header_view',$this->data, TRUE);
+            }
+            elseif($template=='auth_main_content')
+            {
+                $this->data['the_head_content'] = $this->load->view('common/_parts/auth_header_view',$this->data, TRUE);
+            }
+            $this->load->view('common/'.$template.'_view', $this->data);
             
-            //reutrns view_html if returnhtml is true
-            if ($returnhtml){ return $view_html;} 
         }
     }
     
@@ -44,41 +49,44 @@ class Auth_Controller extends MY_Controller
     function __construct() 
     {
         parent::__construct();
-        $this->load->library('ion_auth');
+        
         if($this->ion_auth->logged_in()===FALSE)
         {
             redirect('auth/login');
+            return;
         }
-        $user = $this->ion_auth->users()->row();
+        $user = $this->ion_auth->user()->row();
         $this->data['current_username'] = $user->username;
+        $this->data['load_custom_js'] = "customJS.js";
+        $this->data['load_custom_css'] = "customCSS.css";
+    }
+    
+    function _render_page($the_view, $data=array(), $template='auth_main_content')
+    {
+        parent::_render_page($the_view, $data, $template);
     }
     
     
 }
 
-class Admin_Controller extends MY_Controller
+class Admin_Controller extends Auth_Controller
 {
      
     function __construct() 
     {
         parent::__construct();
-        $this->load->library('ion_auth');
-        if($this->ion_auth->logged_in()===FALSE)
-        {
-            redirect('auth/login');
-        }
-        elseif ($this->ion_auth->is_admin()===FALSE) 
+        
+        if ($this->ion_auth->is_admin()===FALSE) 
         {
             redirect('welcome');
+            return;
         }
-        $user = $this->ion_auth->users()->row();
-        $this->data['current_username'] = $user->username;
     }
     
-    function _render_page($the_view, $data=array(), $returnhtml=false, $template='auth_main_content')
+    function _render_page($the_view, $data=array(), $template='auth_main_content')
     {
         $the_Nview = "admin/$the_view";
-        parent::_render_page($the_Nview, $data, $returnhtml, $template);
+        parent::_render_page($the_Nview, $data, $template);
     }
     
     

@@ -9,8 +9,8 @@ class Medication extends Admin_Controller {
         $this->load->model('Model_Medication');
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
-        $this->data['load_custom_js'] = "inlineEdit.js";
-        $this->data['load_custom_css'] = "scrollDiv.css";
+        
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
     }
     
     public function index()
@@ -33,7 +33,8 @@ class Medication extends Admin_Controller {
         $id = $this->input->post('id');
          
         $this->Model_Medication->inlineEdit( $field, $editedValue, $id );
-        return;
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
     }
     
         
@@ -49,7 +50,46 @@ class Medication extends Admin_Controller {
 
         if ($this->form_validation->run() === FALSE)
         {
-            $this->_render_page('add_medication_view');
+            $this->data['medication_name'] = array(
+                'name'  => 'medication_name',
+                'id'    => 'medication_name',
+                'class' => 'form-control',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('medication_name'),
+            );
+            $this->data['dosage_adult'] = array(
+                'name'  => 'dosage_adult',
+                'id'    => 'dosage_adult',
+                'class' => 'form-control',
+                'type'  => 'number',
+                'min' => '0',
+                'value' => $this->form_validation->set_value('dosage_adult'),
+            );
+            $this->data['dosage_child'] = array(
+                'name'  => 'dosage_child',
+                'id'    => 'dosage_child',
+                'class' => 'form-control',
+                'type'  => 'number',
+                'min' => '0',
+                'value' => $this->form_validation->set_value('dosage_child'),
+            );
+            $this->data['per_num_hours'] = array(
+                'name'  => 'per_num_hours',
+                'id'    => 'per_num_hours',
+                'class' => 'form-control',
+                'type'  => 'number',
+                'min' => '0',
+                'value' => $this->form_validation->set_value('per_num_hours'),
+            );
+            $this->data['description'] = array(
+                'name'  => 'description',
+                'id'    => 'description',
+                'class' => 'form-control',
+                'type'  => 'textarea',
+                'rows' => '10',
+                'value' => $this->form_validation->set_value('description'),
+            );
+            $this->_render_page('add_medication_view', $this->data);
         }
         else 
         {

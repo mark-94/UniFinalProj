@@ -2,11 +2,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title><?php echo $title;?></title>
+            
+        <title><?php  if(isset($title)){echo $title;}else{echo 'CAMHS eReferral';}?></title> 
+
         
         <link href="<?php echo assets_url('css/bootstrap.min.css');?>" rel="stylesheet">
         <?php if(isset($load_custom_css)){?><link href="<?php echo assets_url("css/$load_custom_css") ?>" rel="stylesheet"></link><?php } ?>
@@ -29,29 +31,28 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                       <?php echo anchor('welcome', 'Treatment App', array('title' => 'treatmeant app title','class' =>'navbar-brand')); ?>
+                       <?php echo anchor('welcome', 'Home', array('title' => 'home','class' =>'navbar-brand')); ?>
                     </div>
                     
                     <div id="navbar" class="collapse navbar-collapse">
                         <!-- Left-aligned menu buttons -->
                         <ul class="nav navbar-nav">
-                            <li class="active"><?php echo anchor('welcome', 'Home', array('title' => 'Home button')); ?></li>
-                            <li><?php echo anchor('NEED FILE', 'Referral', array('title' => 'link to referrals form')); ?></li>
-                            <li><?php echo anchor('NEED FILE', 'Treatment Courses', array('title' => 'link to treatment course list')); ?></li>
+                            <li><?php echo anchor('referral', 'My Referrals', array('title' => 'link to users referrals list')); ?></li>
+                            <li><?php echo anchor('diagnosis', 'Diagnosis', array('title' => 'link to diagnosis list')); ?></li>
+                            <li><?php echo anchor('treatment_courses', 'Treatment Courses', array('title' => 'link to treatment course list')); ?></li>
+                            <li><?php echo anchor('medication', 'Medication', array('title' => 'link to medications list')); ?></li>
                         </ul>
                         <!-- Right-aligned menu buttons -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Link</a></li>
+                            <li><?php if($this->ion_auth->is_admin()){echo anchor('admin/dashboard', 'Dashboard', array('title' => 'admin only dashboard button'));} ?></li>
                             <li class="dropdown">
-                                <?php if(isset($current_username)){ ?><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'> <?php echo $current_username ?> <span class='caret'></span></a>
+                                <?php if(isset($current_username)){ ?><a href='#' class='dropdown-toggle text-capitalize' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'> <?php echo $current_username ?> <span class='caret'></span></a>
                                 <ul class='dropdown-menu'>
-                                    <li><a href='#'>Action</a></li>
-                                    <li><a href='#'>Another action</a></li>
-                                    <li><a href='#'>Something else here</a></li>
+                                    <li> <?php echo anchor('auth/change_password', 'Change Password') ?></li>
                                     <li role='separator' class='divider'></li>
-                                    <li> <?php anchor('auth/logout', 'Logout') ?> </li>
+                                    <li> <?php echo anchor('auth/logout', 'Logout') ?> </li>
                                 </ul>
-                                </li><?php } ?>
+                            </li><?php } ?>
                         </ul>
                     </div>                  
                 

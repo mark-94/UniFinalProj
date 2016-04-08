@@ -9,22 +9,38 @@ class Model_Referral extends CI_Model
     
     function getUserReferrals($username)
     {
-        $query = $this->db->get_where('referrals',array('users_username' => $username));
+        $this->db->where('users_username', $username);
+        $this->db->order_by('urgency_id','ASC');
+        $query = $this->db->get('referrals');
         return $query;                
     }
     
-    function getUrgency($id)
+    function getUrgency($id = null)
     {
-        $this->db->select('urgency');
-        $query = $this->db->get_where('referral_urgency',array('id' => $id));
-        return $query->result();                
+        if($id !== null)
+        {
+            $this->db->select('urgency');
+            $query = $this->db->get_where('referral_urgency',array('id' => $id));
+        }
+        elseif($id == null)
+        {
+            $query = $this->db->get('referral_urgency');
+        }
+        return $query;                
     }
     
     function getOutcome($id)
     {
         $this->db->select('outcome');
-        $query = $this->db->get_where('referral_outcome',array('id' => $id));
-        return $query->result();                
+        if($id !== null)
+        {
+            $query = $this->db->get_where('referral_outcome',array('id' => $id));
+        }
+        elseif($id == null)
+        {
+            $query = $this->db->get('referral_outcome');
+        }
+        return $query; 
     }
     
     function getSingleReferral($id)

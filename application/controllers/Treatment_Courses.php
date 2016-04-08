@@ -7,7 +7,6 @@ class Treatment_Courses extends Auth_Controller {
     {
       parent::__construct();        
         $this->load->model('Model_Treatment_Courses');
-        $this->data['load_custom_css'] = 'scrollDiv.css';
     }
     
     public function index()

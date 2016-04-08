@@ -10,8 +10,8 @@ class Diagnosis extends Admin_Controller {
         $this->load->model('Model_Treatment_Courses');
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
-        $this->data['load_custom_js'] = "inlineEdit.js";
-        $this->data['load_custom_css'] = "scrollDiv.css";
+        
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
     }
     
     public function index()
@@ -19,23 +19,27 @@ class Diagnosis extends Admin_Controller {
         $this->getAllDiagnosis();        
     }
     
+    //Gets a list of all diagnosis and courses
     function getAllDiagnosis()
     {        
         $this->data['title'] = 'Diagnosis List';
         $this->data['controller'] = 'diagnosis';
         $this->data['update'] = 'updateDiagnosis';
         $this->data['treatment'] = $this->Model_Treatment_Courses->getTreatmentCourses();
-        $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis(); 
+        $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis()->result(); 
         
+        //filters course into seperate arrays based on association
         foreach ($this->data['diagnosis'] as $key => $diagnosis_course)
         {
-                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN');
-                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN');
+                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN')->result();
+                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN')->result();
         }			
         
         $this->_render_page('diagnosis_view',$this->data);
     }
     
+    
+    //updates the diagnosis with value inputed inline. called via js
     function update()
     {
         $field = $this->input->post('field');
@@ -44,28 +48,33 @@ class Diagnosis extends Admin_Controller {
 
                          
         $this->Model_Diagnosis->inlineEdit( $field, $editedValue, $id );
-        return;
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
     }
     
+    //adds an association between a diagnosis & treatment course. caled via js
     function addSelection()
     {
         $data['diagnosis_id'] = $this->input->post('diag_id');
         $data['treatment_course_id'] = $this->input->post('treat_id');
                                  
         $this->Model_Diagnosis->insertSelection( $data );
-        return;
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
     }
     
+    //deletes an association between a diagnosis & treatment course. caled via js
     function deleteSelection()
     {
         $data['diagnosis_id'] = $this->input->post('diag_id');
         $data['treatment_course_id'] = $this->input->post('treat_id');
                                  
         $this->Model_Diagnosis->deleteSelection( $data );
-        return;
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
     }
     
-        
+    //sets form validation
     function addDiagnosisForm()
     {
         $this->data['title'] = 'Create Diagnosis';
@@ -76,7 +85,22 @@ class Diagnosis extends Admin_Controller {
 
         if ($this->form_validation->run() === FALSE)
         {
-            $this->_render_page('add_diagnosis_view');
+            $this->data['diagnosis_name'] = array(
+                'name'  => 'diagnosis_name',
+                'id'    => 'diagnosis_name',
+                'class' => 'form-control',
+                'type'  => 'text',
+                'value' => $this->form_validation->set_value('diagnosis_name'),
+            );
+            $this->data['description'] = array(
+                'name'  => 'description',
+                'id'    => 'description',
+                'class' => 'form-control',
+                'type'  => 'textarea',
+                'rows' => '10',
+                'value' => $this->form_validation->set_value('description'),
+            );
+            $this->_render_page('add_diagnosis_view', $this->data);
         }
         else 
         {

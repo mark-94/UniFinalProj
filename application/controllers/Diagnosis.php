@@ -7,7 +7,6 @@ class Diagnosis extends Auth_Controller {
       parent::__construct();        
         $this->load->model('Model_Diagnosis');
         $this->load->model('Model_Treatment_Courses');
-        $this->data['load_custom_css'] = "scrollDiv.css";
     }
     
     public function index()
@@ -21,12 +20,12 @@ class Diagnosis extends Auth_Controller {
         $this->data['controller'] = 'diagnosis';
         $this->data['update'] = 'updateDiagnosis';
         $this->data['treatment'] = $this->Model_Treatment_Courses->getTreatmentCourses();
-        $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis(); 
+        $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis()->result(); 
         
         foreach ($this->data['diagnosis'] as $key => $diagnosis_course)
         {
-                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN');
-                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN');
+                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN')->result();
+                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN')->result();
         }			
         
         $this->_render_page('diagnosis_view',$this->data);

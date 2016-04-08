@@ -5,6 +5,7 @@ class Dashboard extends Admin_Controller {
  
     public function index()
     {
-        $this->_render_page('dashboard/index_view');
+        $this->data['title'] = 'Admin Dashboard';
+        $this->_render_page('dashboard_view');
     }
 }
