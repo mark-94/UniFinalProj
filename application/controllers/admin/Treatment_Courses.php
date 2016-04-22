@@ -6,7 +6,7 @@ class Treatment_Courses extends Admin_Controller {
     function __construct()
     {
       parent::__construct();        
-        $this->load->model('Model_Treatment_Courses');
+        $this->load->model(array('Model_Treatment_Courses','Model_Medication'));
         $this->load->library('form_validation');
         $this->load->helper(array('form','url'));
         
@@ -21,7 +21,15 @@ class Treatment_Courses extends Admin_Controller {
     function getAllCourses()
     {        
         $this->data['title'] = 'Treatment Courses';
-        $this->data['treatment_courses'] = $this->Model_Treatment_Courses->getTreatmentCourses()->result();       
+        $this->data['medication'] = $this->Model_Medication->getMedication();
+        $this->data['treatment_courses'] = $this->Model_Treatment_Courses->getTreatmentCourses()->result();
+        
+        //filters medications into seperate arrays based on association
+        foreach ($this->data['treatment_courses'] as $key => $course_medication)
+        {
+                $this->data['treatment_courses'][$key]->medication = $this->Model_Treatment_Courses->getCourseMedications($course_medication->id,'IN')->result();
+                $this->data['treatment_courses'][$key]->unselected_medication = $this->Model_Treatment_Courses->getCourseMedications($course_medication->id,'NOT IN')->result();
+        }		
         
         $this->_render_page('treatment_courses_view',$this->data);
     }
@@ -33,6 +41,27 @@ class Treatment_Courses extends Admin_Controller {
         $id = $this->input->post('id');
          
         $this->Model_Treatment_Courses->inlineEdit( $field, $editedValue, $id );
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
+    }
+    
+    function addSelection()
+    {
+        $data['treatment_course_id'] = $this->input->post('diag_or_treat_id');
+        $data['medication_id'] = $this->input->post('treat_or_med_id');
+                                 
+        $this->Model_Treatment_Courses->insertSelection( $data );
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
+    }
+    
+    //deletes an association between a treatment course & medication. caled via js
+    function deleteSelection()
+    {
+        $data['treatment_course_id'] = $this->input->post('diag_or_treat_id');
+        $data['medication_id'] = $this->input->post('treat_or_med_id');
+                                 
+        $this->Model_Treatment_Courses->deleteSelection( $data );
         $csrf_hash = $this->security->get_csrf_hash();
         echo $csrf_hash;
     }

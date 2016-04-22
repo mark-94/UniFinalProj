@@ -50,7 +50,8 @@ class Model_Diagnosis extends CI_Model
     //returns all treatment courses where treatment id and diagnosis id are associated
     function getDiagnosisCourses($id,$in)
     {
-            $query = $this->db->query("SELECT * FROM treatment_courses WHERE id $in (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
+            $query = $this->db->query("SELECT * FROM treatment_courses WHERE id "
+                    . "$in (SELECT treatment_course_id FROM diagnosis_treatment WHERE diagnosis_id=$id)");
             
             return $query;
     }

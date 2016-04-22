@@ -24,8 +24,10 @@ class Diagnosis extends Auth_Controller {
         
         foreach ($this->data['diagnosis'] as $key => $diagnosis_course)
         {
-                $this->data['diagnosis'][$key]->courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN')->result();
-                $this->data['diagnosis'][$key]->unselected_courses = $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN')->result();
+                $this->data['diagnosis'][$key]->courses = 
+                        $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'IN')->result();
+                $this->data['diagnosis'][$key]->unselected_courses = 
+                        $this->Model_Diagnosis->getDiagnosisCourses($diagnosis_course->id,'NOT IN')->result();
         }			
         
         $this->_render_page('diagnosis_view',$this->data);

@@ -6,7 +6,7 @@
 <ul class="list-group row diagnosis-list side-margin">
     <input class="token" type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" style="display:none;">
 <?php foreach($diagnosis as $row){ ?>
-    <div id="<?php echo $row->id ?>" class="diagnosis inline-id" >
+    <div id="<?php echo $row->id ?>" class="diag-treat inline-id" >
         <strong><div id="diagnosis_name" class="list-group-item row clickable inline-edit" type="text" data-toggle="collapse" data-field="diagnosis_name" data-target="<?php echo "#description$row->id" ?>" contenteditable="true"><?php echo $row->diagnosis_name ?></div></strong>
         <div id="<?php echo 'description'.$row->id?>" class="collapse row scrollDiv ">
             <div  id="description" class="list-group-item col-lg-9 inline-edit" type="text" contenteditable="true" ><?php echo $row->description ?></div>

@@ -12,16 +12,13 @@ class MY_Controller extends CI_Controller
         
     }
     
+    /*  
+     *  -The main method that decides how to load a view and
+     *  -functionality for loading alternative content types
+     */
     function _render_page($the_view, $data=array(), $template='main_content')
     {
-        //if it's decided/need to use json files for any content
-        if($template == 'json' || $this->input->is_ajax_request())
-        {
-            header('Content-Type: application/json');
-            echo json_encode($this->data);
-        }
-        //if its decided/need for page to have no template
-        elseif(is_null($template))
+        if(is_null($template))
         {
             $this->load->view($the_view,$this->data);
         }
@@ -43,16 +40,21 @@ class MY_Controller extends CI_Controller
     
 }
 
-class Auth_Controller extends MY_Controller 
+/*  
+ *  -Core controller for authenticated users. 
+ *  -Loads custom CSS and JS
+ *  -gets current users username
+ */
+class Auth_Controller extends My_Controller 
 {
      
     function __construct() 
     {
         parent::__construct();
         
-        if($this->ion_auth->logged_in()===FALSE)
+        if(!$this->ion_auth->logged_in())
         {
-            redirect('auth/login');
+            redirect('login');
             return;
         }
         $user = $this->ion_auth->user()->row();
@@ -69,6 +71,9 @@ class Auth_Controller extends MY_Controller
     
 }
 
+/*  
+ *  -Core controller for Administrative users
+ */
 class Admin_Controller extends Auth_Controller
 {
      
@@ -76,7 +81,7 @@ class Admin_Controller extends Auth_Controller
     {
         parent::__construct();
         
-        if ($this->ion_auth->is_admin()===FALSE) 
+        if (!$this->ion_auth->is_admin()) 
         {
             redirect('welcome');
             return;
@@ -85,8 +90,8 @@ class Admin_Controller extends Auth_Controller
     
     function _render_page($the_view, $data=array(), $template='auth_main_content')
     {
-        $the_Nview = "admin/$the_view";
-        parent::_render_page($the_Nview, $data, $template);
+        $the_Adminview = "admin/$the_view";
+        parent::_render_page($the_Adminview, $data, $template);
     }
     
     

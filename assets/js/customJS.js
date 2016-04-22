@@ -4,16 +4,19 @@
 //</div>
 $(document).ready(function(){
     $('div.inline-edit').blur(function()
-    {
-        
+    {        
         var pathArray = window.location.pathname.split( '/' );
         var segment_3 = pathArray[3];
+        if(segment_3 === "patient_referral")
+        {
+            segment_3 = "referral";
+        }
         var editableObj = $(this);
+        var editedType = editableObj.attr('type');
         
         var token_input = $('input.token');
-        var editedType = editableObj.attr('type');
-        var save_data ={};
         var token_name = token_input.attr('name');
+        var save_data ={};        
         save_data[token_name] = token_input.attr('value');
         save_data['field'] = editableObj.attr('id');
         save_data['id'] = editableObj.closest('.inline-id').attr('id');
@@ -27,7 +30,6 @@ $(document).ready(function(){
                 type: 'POST',
                 data:save_data,
                 success: function(data){
-
                         $(token_input).val(data);
                         $(editableObj).addClass('list-group-item-success');
                 }        
@@ -53,9 +55,9 @@ $(document).ready(function(){
         var token_input = $('input.token');
         var token_name = token_input.attr('name');
         post_data[token_name]= token_input.attr('value');
-        post_data['course_name'] = el.text();
-        post_data['diag_id'] = el.closest('.diagnosis').attr('id');
-        post_data['treat_id'] = el.attr('id');
+        post_data['name'] = el.text();
+        post_data['diag_or_treat_id'] = el.closest('.diag-treat').attr('id');
+        post_data['treat_or_med_id'] = el.attr('id');
         
         $.ajax({
             url: segment_3+'/addSelection',
@@ -64,7 +66,7 @@ $(document).ready(function(){
             success: function(data){
                 $(token_input).val(data);
                 el.remove();
-                $('#selected_list'+post_data['diag_id']).append('<li id="'+post_data['treat_id']+'" class="list-group-item list-group-item-info">'+post_data['course_name']+'<a href="#" id="deselect" class="pull-right"><i class="glyphicon glyphicon-remove"></i></a></li>');
+                $('#selected_list'+post_data['diag_or_treat_id']).append('<li id="'+post_data['treat_or_med_id']+'" class="list-group-item list-group-item-info">'+post_data['name']+'<a href="#" id="deselect" class="pull-right"><i class="glyphicon glyphicon-remove"></i></a></li>');
             }        
         });
     });
@@ -83,9 +85,9 @@ $(document).ready(function(){
         var token_input = $('input.token');
         var token_name = token_input.attr('name');
         post_data[token_name]= token_input.attr('value');
-        post_data['course_name'] = el.text();
-        post_data['diag_id'] = $(this).closest('.diagnosis').attr('id');
-        post_data['treat_id'] = el.attr('id');
+        post_data['name'] = el.text();
+        post_data['diag_or_treat_id'] = $(this).closest('.diag-treat').attr('id');
+        post_data['treat_or_med_id'] = el.attr('id');
         
         $.ajax({
             url: segment_3+'/deleteSelection',
@@ -94,7 +96,7 @@ $(document).ready(function(){
             success: function(data){
                 $(token_input).val(data);
                 el.remove();
-                $('#unselected_list'+post_data['diag_id']).append('<button id="'+post_data['treat_id']+'" class="list-group-item list-group-item-warning btn-width-match-parent unselected" >'+post_data['course_name']+'</button>');
+                $('#unselected_list'+post_data['diag_or_treat_id']).append('<button id="'+post_data['treat_or_med_id']+'" class="list-group-item list-group-item-warning btn-width-match-parent unselected" >'+post_data['name']+'</button>');
 
             }        
        });

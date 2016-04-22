@@ -60,6 +60,17 @@ class Referral extends Auth_Controller {
         $this->_render_page('referrals_view',$this->data);
     }    
     
+    function update()
+    {
+        $field = $this->input->post('field');
+        $editedValue = $this->input->post('editedValue');
+        $id = $this->input->post('id');
+
+                         
+        $this->Model_Referal->inlineEdit( $field, $editedValue, $id );
+        $csrf_hash = $this->security->get_csrf_hash();
+        echo $csrf_hash;
+    }
     
     function patient_referral($id)
     {

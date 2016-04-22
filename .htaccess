@@ -1,12 +1,11 @@
 RewriteEngine On
 SetEnvIf Host www.example.com$ CI_ENV=production
-SetEnvIf Host test.yoursite.tld$ CI_ENV=testing
+SetEnvIf Host scm.ulster.ac.uk/~B00610820/FinalYearProj$ CI_ENV=testing
 SetEnvIf Host localhost$ CI_ENV=development
 
 #prepends index.php if the url isn't index.php/resource/robots.txt and doesn't point to a file or directory
 <IfModule mod_rewrite.c>
-RewriteCond $1 !^(index\\.php|resources|robots\\.txt)
-RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>

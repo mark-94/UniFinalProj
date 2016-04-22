@@ -29,6 +29,13 @@ class Model_Referral extends CI_Model
         return $query;                
     }
     
+    function inlineEdit($field, $editedValue, $id )
+    {
+        $data[$field] = $editedValue;
+        $this->db->where('id',$id);
+        $this->db->update('referrals',$data);
+    }
+    
     function getOutcome($id)
     {
         $this->db->select('outcome');

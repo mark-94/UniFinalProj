@@ -8,9 +8,9 @@
 
                     <div class="col-lg-4">
 
-                        <a href="<?php echo base_url('page/about_us'); ?>">About Us</a><br/>
-                        <a href="<?php echo base_url('page/privacy'); ?>">Privacy Policy</a><br/>
-                        <a href="<?php echo base_url('page/terms'); ?>">Terms & Conditions</a><br/>
+                        <a href="<?php echo base_url('common/about_us'); ?>">About Us</a><br/>
+                        <a href="<?php echo base_url('common/privacy'); ?>">Privacy Policy</a><br/>
+                        <a href="<?php echo base_url('common/terms'); ?>">Terms & Conditions</a><br/>
                     </div>
 
                     <div class="col-lg-4">
@@ -18,7 +18,7 @@
 
                     <div class="col-lg-4">
                         <h5>Phone: <a href="tel:(028) 1234 1234">(028) 1234 1234</a></h5>
-                        <h5>Email: <a href="mailto:example@email.co.uk">example@email.co.uk</a></h5>
+                        <h5>Email: <a href="mailto:admin@email.co.uk">Admin</a></h5>
                     </div> 
 
                 </div>

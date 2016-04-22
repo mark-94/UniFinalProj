@@ -28,4 +28,25 @@ class Model_Treatment_Courses extends CI_Model
         
     }
     
+    function insertSelection($data=array())
+    {
+        $this->db->insert('treatment_medication',$data);
+        
+    }
+    
+    function deleteSelection($data=array())
+    {
+        $this->db->where($data);
+        $this->db->delete('treatment_medication');
+        return;
+    }
+    
+    //returns all medicationss where medication id and treatment_course id are associated
+    function getCourseMedications($id,$in)
+    {
+            $query = $this->db->query("SELECT * FROM medication WHERE id "
+                    . "$in (SELECT medication_id FROM treatment_medication WHERE treatment_course_id=$id)");
+            
+            return $query;
+    }
 }

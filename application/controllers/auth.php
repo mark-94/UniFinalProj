@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends MY_Controller {
+class Auth extends Auth_Controller {
 
 	function __construct()
 	{
@@ -21,7 +21,7 @@ class Auth extends MY_Controller {
 		if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
-			redirect('auth/login', 'refresh');
+			redirect('login', 'refresh');
 		}
 		elseif (!$this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
 		{
@@ -44,58 +44,6 @@ class Auth extends MY_Controller {
 		}
 	}
 
-	// log the user in
-	function login()
-	{
-		$this->data['title'] = "Login";
-
-		//validate form input
-		$this->form_validation->set_rules('identity', 'Identity', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required');
-
-		if ($this->form_validation->run() == true)
-		{
-			// check to see if the user is logging in
-			// check for "remember me"
-			$remember = (bool) $this->input->post('remember');
-
-			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
-			{
-				//if the login is successful
-				//redirect them back to the home page
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('welcome', 'refresh');
-			}
-			else
-			{
-				// if the login was un-successful
-				// redirect them back to the login page
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
-			}
-		}
-		else
-		{
-			// the user is not logging in so display the login page
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			$this->data['identity'] = array('name' => 'identity',
-				'id'    => 'identity',
-				'type'  => 'text',
-                                'class' => 'form-control',
-				'value' => $this->form_validation->set_value('identity'),
-			);
-			$this->data['password'] = array('name' => 'password',
-				'id'   => 'password',
-				'type' => 'password',
-                                'class' => 'form-control',
-			);
-
-			$this->_render_page('auth/login', $this->data);
-		}
-	}
-
 	// log the user out
 	function logout()
 	{
@@ -106,7 +54,7 @@ class Auth extends MY_Controller {
 
 		// redirect them to the login page
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
-		redirect('auth/login', 'refresh');
+		redirect('login', 'refresh');
 	}
 
 	// change password
@@ -118,7 +66,7 @@ class Auth extends MY_Controller {
 
 		if (!$this->ion_auth->logged_in())
 		{
-			redirect('auth/login', 'refresh');
+			redirect('login', 'refresh');
 		}
 
 		$user = $this->ion_auth->user()->row();
@@ -241,7 +189,7 @@ class Auth extends MY_Controller {
 			{
 				// if there were no errors
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
+				redirect("login", 'refresh'); //we should display a confirmation page here instead of the login page
 			}
 			else
 			{
@@ -325,7 +273,7 @@ class Auth extends MY_Controller {
 					{
 						// if the password was successfully changed
 						$this->session->set_flashdata('message', $this->ion_auth->messages());
-						redirect("auth/login", 'refresh');
+						redirect("login", 'refresh');
 					}
 					else
 					{

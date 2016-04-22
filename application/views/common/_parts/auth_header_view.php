@@ -31,20 +31,20 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                       <?php echo anchor('welcome', 'Home', array('title' => 'home','class' =>'navbar-brand')); ?>
+                       <?php echo anchor('welcome', 'Home', array('title' => 'Return to the homepage','class' =>'navbar-brand')); ?>
                     </div>
                     
                     <div id="navbar" class="collapse navbar-collapse">
                         <!-- Left-aligned menu buttons -->
                         <ul class="nav navbar-nav">
-                            <li><?php echo anchor('referral', 'My Referrals', array('title' => 'link to users referrals list')); ?></li>
-                            <li><?php echo anchor('diagnosis', 'Diagnosis', array('title' => 'link to diagnosis list')); ?></li>
-                            <li><?php echo anchor('treatment_courses', 'Treatment Courses', array('title' => 'link to treatment course list')); ?></li>
-                            <li><?php echo anchor('medication', 'Medication', array('title' => 'link to medications list')); ?></li>
+                            <li <?php if ($this->uri->segment(1)==='referral'){ echo "class='active'";}?>><?php echo anchor('referral', 'My Referrals', array('title' => 'Display a list of my referrals')); ?></li>
+                            <li <?php if ($this->uri->segment(1)==='diagnosis'){ echo "class='active'";}?>><?php echo anchor('diagnosis', 'Diagnosis', array('title' => 'Display a list of my diagnoses')); ?></li>
+                            <li <?php if ($this->uri->segment(1)==='treatment_courses'){ echo "class='active'";}?>><?php echo anchor('treatment_courses', 'Treatment Courses', array('title' => 'Display a list of my referrals treatment courses')); ?></li>
+                            <li <?php if ($this->uri->segment(1)==='medication'){ echo "class='active'";}?>><?php echo anchor('medication', 'Medication', array('title' => 'Display a list of my referrals medications')); ?></li>
                         </ul>
                         <!-- Right-aligned menu buttons -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li><?php if($this->ion_auth->is_admin()){echo anchor('admin/dashboard', 'Dashboard', array('title' => 'admin only dashboard button'));} ?></li>
+                            <li <?php if ($this->uri->segment(2)==='dashboard'){ echo "class='active'";}?>><?php if($this->ion_auth->is_admin()){echo anchor('admin/dashboard', 'Dashboard', array('title' => 'Open the Admin Dashboard'));} ?></li>
                             <li class="dropdown">
                                 <?php if(isset($current_username)){ ?><a href='#' class='dropdown-toggle text-capitalize' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'> <?php echo $current_username ?> <span class='caret'></span></a>
                                 <ul class='dropdown-menu'>

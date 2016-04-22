@@ -88,7 +88,7 @@ class Verify extends Admin_Controller
 //    }
     
     //$this->load->view('verify_view', $data);
-    $this->_render_page('verify_view', $this->data, true, null);
+    $this->_render_page('verify_view', $this->data);
   }
 }
     

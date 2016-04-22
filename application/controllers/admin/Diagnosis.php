@@ -23,8 +23,6 @@ class Diagnosis extends Admin_Controller {
     function getAllDiagnosis()
     {        
         $this->data['title'] = 'Diagnosis List';
-        $this->data['controller'] = 'diagnosis';
-        $this->data['update'] = 'updateDiagnosis';
         $this->data['treatment'] = $this->Model_Treatment_Courses->getTreatmentCourses();
         $this->data['diagnosis'] = $this->Model_Diagnosis->getDiagnosis()->result(); 
         
@@ -55,8 +53,8 @@ class Diagnosis extends Admin_Controller {
     //adds an association between a diagnosis & treatment course. caled via js
     function addSelection()
     {
-        $data['diagnosis_id'] = $this->input->post('diag_id');
-        $data['treatment_course_id'] = $this->input->post('treat_id');
+        $data['diagnosis_id'] = $this->input->post('diag_or_treat_id');
+        $data['treatment_course_id'] = $this->input->post('treat_or_med_id');
                                  
         $this->Model_Diagnosis->insertSelection( $data );
         $csrf_hash = $this->security->get_csrf_hash();
@@ -66,8 +64,8 @@ class Diagnosis extends Admin_Controller {
     //deletes an association between a diagnosis & treatment course. caled via js
     function deleteSelection()
     {
-        $data['diagnosis_id'] = $this->input->post('diag_id');
-        $data['treatment_course_id'] = $this->input->post('treat_id');
+        $data['diagnosis_id'] = $this->input->post('diag_or_treat_id');
+        $data['treatment_course_id'] = $this->input->post('treat_or_med_id');
                                  
         $this->Model_Diagnosis->deleteSelection( $data );
         $csrf_hash = $this->security->get_csrf_hash();
