@@ -1,4 +1,4 @@
-//To use follow this structure:
+//To use follow this :
 //<div id="id-of-row-in-db" class="inline-id">
 //  <div id="name-of-field-in-db" class="inline-edit" contenteditable="true">editable cotent</div>
 //</div>
@@ -6,11 +6,14 @@ $(document).ready(function(){
     $('div.inline-edit').blur(function()
     {        
         var pathArray = window.location.pathname.split( '/' );
-        var segment_3 = pathArray[3];
-        if(segment_3 === "patient_referral")
+        var segment = pathArray[3];
+        var url = segment+'/update';
+        if(segment === "patient_referral")
         {
-            segment_3 = "referral";
+            url = "http://[::1]/FinalYearProj/referral/update";
         }
+        
+        
         var editableObj = $(this);
         var editedType = editableObj.attr('type');
         
@@ -26,7 +29,7 @@ $(document).ready(function(){
         {
             $(editableObj).popover('destroy');
             $.ajax({
-                url: segment_3+'/update',
+                url: url,
                 type: 'POST',
                 data:save_data,
                 success: function(data){
