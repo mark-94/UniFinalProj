@@ -1,3 +1,9 @@
+#####################################
+This was my Final Year project at Uni
+#####################################
+
+Its a conecptual referrals website using the CodeIgniter 3 framework, jquery and custom javascript for inline editing. Supported by an SQL database.
+
 ###################
 What is CodeIgniter
 ###################
